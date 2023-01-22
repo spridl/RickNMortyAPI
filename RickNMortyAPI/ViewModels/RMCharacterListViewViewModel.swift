@@ -17,8 +17,18 @@ extension RMCharacterListViewViewModel: UICollectionViewDataSource, UICollection
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-        cell.backgroundColor = .systemGreen
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: RMCharacterCollectionViewCell.cellIdentifier,
+            for: indexPath
+        ) as? RMCharacterCollectionViewCell else {
+            fatalError("Unsupported cell")
+        }
+        let viewModel = RMCharacterCollectionViewCellViewModel(
+            characterName: "Tim",
+            characterStatus: .alive,
+            characterImageUrl: URL(string: "")
+        )
+        cell.cofigure(with: viewModel)
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
